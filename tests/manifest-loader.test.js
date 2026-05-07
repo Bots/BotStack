@@ -47,3 +47,17 @@ test('validateManifest rejects unsupported operation type', () => {
     verify: [],
   }), /shell_magic is not supported/);
 });
+
+test('validateManifest rejects malformed operation harness filters', () => {
+  assert.throws(() => validateManifest({
+    schema_version: 1,
+    id: 'demo',
+    name: 'Demo',
+    summary: 'Demo tool',
+    category: 'demo',
+    stacks: ['base'],
+    harnesses: ['codex'],
+    install: [{ id: 'bad', type: 'mkdir', harnesses: ['codex', ''] }],
+    verify: [],
+  }), /harnesses must be an array of non-empty strings/);
+});

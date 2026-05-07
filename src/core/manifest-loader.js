@@ -43,6 +43,9 @@ function validateOperation(operation, label, errors) {
   }
   if (typeof operation.id !== 'string' || operation.id.trim() === '') errors.push(`${label}.id must be a non-empty string`);
   if (typeof operation.type !== 'string' || operation.type.trim() === '') errors.push(`${label}.type must be a non-empty string`);
+  if (operation.harnesses !== undefined && (!Array.isArray(operation.harnesses) || operation.harnesses.some((item) => typeof item !== 'string' || item.trim() === ''))) {
+    errors.push(`${label}.harnesses must be an array of non-empty strings`);
+  }
 
   const supported = new Set(['mkdir', 'command', 'append_managed_block', 'toml.merge', 'json.merge']);
   if (operation.type && !supported.has(operation.type)) errors.push(`${label}.type ${operation.type} is not supported`);

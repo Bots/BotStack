@@ -17,9 +17,34 @@
       "id": "codex-mcp-note",
       "type": "toml.merge",
       "description": "Record Serena MCP enablement for Codex users",
+      "harnesses": ["codex"],
       "target": "${home}/.codex/config.toml",
       "value": {
         "botstack_serena_enabled": true
+      }
+    },
+    {
+      "id": "opencode-mcp-note",
+      "type": "json.merge",
+      "description": "Record Serena MCP enablement for OpenCode users",
+      "harnesses": ["opencode"],
+      "target": "${home}/.config/opencode/opencode.json",
+      "value": {
+        "botstack": {
+          "serena": true
+        }
+      }
+    },
+    {
+      "id": "claude-mcp-note",
+      "type": "json.merge",
+      "description": "Record Serena MCP enablement for Claude Code users",
+      "harnesses": ["claude"],
+      "target": "${home}/.claude.json",
+      "value": {
+        "botstack": {
+          "serena": true
+        }
       }
     }
   ],

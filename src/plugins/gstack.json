@@ -17,8 +17,33 @@
       "id": "codex-routing-note",
       "type": "append_managed_block",
       "description": "Add a managed note about GStack routing",
+      "harnesses": ["codex"],
       "target": "${home}/.codex/AGENTS.md",
       "value": "Use gstack workflow skills when explicitly invoked by the user."
+    },
+    {
+      "id": "opencode-routing-note",
+      "type": "json.merge",
+      "description": "Record GStack routing notes for OpenCode users",
+      "harnesses": ["opencode"],
+      "target": "${home}/.config/opencode/opencode.json",
+      "value": {
+        "botstack": {
+          "gstack": "Use gstack workflow skills when explicitly invoked by the user."
+        }
+      }
+    },
+    {
+      "id": "claude-routing-note",
+      "type": "json.merge",
+      "description": "Record GStack routing notes for Claude Code users",
+      "harnesses": ["claude"],
+      "target": "${home}/.claude.json",
+      "value": {
+        "botstack": {
+          "gstack": "Use gstack workflow skills when explicitly invoked by the user."
+        }
+      }
     }
   ],
   "verify": [

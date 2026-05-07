@@ -35,7 +35,8 @@ function renderInstallDirs(plugins) {
   for (const plugin of plugins) {
     lines.push(`## ${plugin.name}`, '');
     for (const operation of plugin.install.filter((item) => item.target)) {
-      lines.push(`- \`${formatDocPath(operation.target)}\` — ${operation.description || operation.id}`);
+      const harnesses = operation.harnesses?.length ? ` (${operation.harnesses.join(', ')})` : '';
+      lines.push(`- \`${formatDocPath(operation.target)}\`${harnesses} — ${operation.description || operation.id}`);
     }
     lines.push('');
   }
@@ -47,7 +48,8 @@ function renderVerification(plugins) {
   for (const plugin of plugins) {
     lines.push(`## ${plugin.name}`, '');
     for (const operation of plugin.verify) {
-      lines.push(`- \`${operation.command || operation.type}\` — ${operation.description || operation.id}`);
+      const harnesses = operation.harnesses?.length ? ` (${operation.harnesses.join(', ')})` : '';
+      lines.push(`- \`${operation.command || operation.type}\`${harnesses} — ${operation.description || operation.id}`);
     }
     lines.push('');
   }

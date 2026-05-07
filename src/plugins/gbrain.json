@@ -17,9 +17,46 @@
       "id": "codex-config",
       "type": "toml.merge",
       "description": "Register GBrain notes for Codex users",
+      "harnesses": ["codex"],
       "target": "${home}/.codex/config.toml",
       "value": {
         "botstack_gbrain_enabled": true
+      }
+    },
+    {
+      "id": "opencode-config",
+      "type": "json.merge",
+      "description": "Register GBrain notes for OpenCode users",
+      "harnesses": ["opencode"],
+      "target": "${home}/.config/opencode/opencode.json",
+      "value": {
+        "botstack": {
+          "gbrain": true
+        }
+      }
+    },
+    {
+      "id": "claude-config",
+      "type": "json.merge",
+      "description": "Register GBrain notes for Claude Code users",
+      "harnesses": ["claude"],
+      "target": "${home}/.claude.json",
+      "value": {
+        "botstack": {
+          "gbrain": true
+        }
+      }
+    },
+    {
+      "id": "continue-config",
+      "type": "json.merge",
+      "description": "Register GBrain notes for Continue users",
+      "harnesses": ["continue"],
+      "target": "${home}/.continue/config.json",
+      "value": {
+        "botstack": {
+          "gbrain": true
+        }
       }
     }
   ],

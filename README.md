@@ -22,6 +22,15 @@ can be tested first.
 
 ## Quickstart
 
+Early development bootstrap:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/Bots/BotStack/main/install.sh | sh
+```
+
+The bootstrap installs Botstack itself under `~/.botstack/botstack`. It does not
+install the tool stack until you run `botstack install`.
+
 Inspect the base plan without writing files:
 
 ```sh

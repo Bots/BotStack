@@ -32,6 +32,7 @@ Operation fields:
 - `value`: merge value or managed block body
 - `command`: shell command for command operations
 - `timeout_ms`: optional timeout override
+- `harnesses`: optional list of harness ids this operation applies to
 
 Templates supported in string fields:
 

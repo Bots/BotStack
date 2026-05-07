@@ -20,9 +20,11 @@ function buildPlan({ plugins, environment, selection }) {
   const steps = [];
   for (const plugin of selectedPlugins) {
     for (const operation of plugin.install) {
+      if (!appliesToHarness(operation, harnesses)) continue;
       steps.push(stepFor(plugin, operation, environment, harnesses));
     }
     for (const operation of plugin.verify) {
+      if (!appliesToHarness(operation, harnesses)) continue;
       steps.push(stepFor(plugin, operation, environment, harnesses, true));
     }
   }
@@ -35,6 +37,11 @@ function buildPlan({ plugins, environment, selection }) {
     steps,
     errors,
   };
+}
+
+function appliesToHarness(operation, harnesses) {
+  if (!operation.harnesses || operation.harnesses.length === 0) return true;
+  return operation.harnesses.some((harness) => harnesses.includes(harness));
 }
 
 function stepFor(plugin, operation, environment, harnesses, verify = false) {
@@ -69,4 +76,4 @@ function expandValue(value, environment, harnesses) {
   return value;
 }
 
-module.exports = { buildPlan, expandValue };
+module.exports = { buildPlan, expandValue, appliesToHarness };

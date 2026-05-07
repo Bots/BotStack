@@ -46,3 +46,26 @@ test('buildPlan reports unknown harness and tool', () => {
 
   assert.deepEqual(plan.errors, ['Unknown tool: missing', 'Unknown harness: missing-harness']);
 });
+
+test('buildPlan includes only operations matching selected harnesses', () => {
+  const environment = detectEnvironment({ platform: 'linux', homeDir: '/tmp/home' });
+  const plan = buildPlan({
+    plugins: [{
+      id: 'multi',
+      name: 'Multi',
+      summary: 'Multi',
+      stacks: ['base'],
+      install: [
+        { id: 'dir', type: 'mkdir', target: '${toolsDir}/multi' },
+        { id: 'codex', type: 'toml.merge', harnesses: ['codex'], target: '${home}/.codex/config.toml', value: { enabled: true } },
+        { id: 'opencode', type: 'json.merge', harnesses: ['opencode'], target: '${home}/.config/opencode/opencode.json', value: { enabled: true } },
+      ],
+      verify: [],
+    }],
+    environment,
+    selection: { stack: 'base', tools: [], harnesses: ['opencode'] },
+  });
+
+  assert.deepEqual(plan.steps.map((step) => step.id), ['multi:dir', 'multi:opencode']);
+  assert.equal(plan.steps.some((step) => step.target.includes('.codex')), false);
+});
