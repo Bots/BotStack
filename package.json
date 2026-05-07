@@ -1,0 +1,18 @@
+{
+  "name": "botstack",
+  "version": "0.1.0",
+  "description": "Guided installer for a trusted AI agent harness base stack.",
+  "bin": {
+    "botstack": "bin/botstack"
+  },
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check bin/botstack && find src tests -name '*.js' -print0 | xargs -0 -n1 node --check",
+    "docs:generate": "node bin/botstack docs generate"
+  },
+  "license": "MIT",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  }
+}

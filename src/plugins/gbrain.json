@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "gbrain",
+  "name": "GBrain",
+  "summary": "Persistent memory and search for coding agents.",
+  "category": "memory",
+  "stacks": ["base", "everything"],
+  "harnesses": ["codex", "opencode", "claude", "aider", "continue"],
+  "install": [
+    {
+      "id": "tool-dir",
+      "type": "mkdir",
+      "description": "Create the GBrain tool directory",
+      "target": "${toolsDir}/gbrain"
+    },
+    {
+      "id": "codex-config",
+      "type": "toml.merge",
+      "description": "Register GBrain notes for Codex users",
+      "target": "${home}/.codex/config.toml",
+      "value": {
+        "botstack_gbrain_enabled": true
+      }
+    }
+  ],
+  "verify": [
+    {
+      "id": "version",
+      "type": "command",
+      "description": "Check whether gbrain is available",
+      "command": "command -v gbrain >/dev/null 2>&1",
+      "timeout_ms": 30000
+    }
+  ]
+}

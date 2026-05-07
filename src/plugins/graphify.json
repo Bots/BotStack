@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "graphify",
+  "name": "Graphify",
+  "summary": "Graph-oriented context and relationship mapping for builder workflows.",
+  "category": "context",
+  "stacks": ["everything"],
+  "harnesses": ["codex", "opencode", "claude", "aider", "continue"],
+  "install": [
+    {
+      "id": "tool-dir",
+      "type": "mkdir",
+      "description": "Create the Graphify tool directory",
+      "target": "${toolsDir}/graphify"
+    }
+  ],
+  "verify": [
+    {
+      "id": "placeholder",
+      "type": "command",
+      "description": "Placeholder verification until Graphify install source is finalized",
+      "command": "echo 'graphify verification pending manifest source'",
+      "timeout_ms": 30000
+    }
+  ]
+}

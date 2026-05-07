@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "gstack",
+  "name": "GStack",
+  "summary": "Workflow skills, browser QA, reviews, and agent orchestration helpers.",
+  "category": "agent-harness",
+  "stacks": ["base", "everything"],
+  "harnesses": ["codex", "opencode", "claude"],
+  "install": [
+    {
+      "id": "tool-dir",
+      "type": "mkdir",
+      "description": "Create the GStack tool directory",
+      "target": "${toolsDir}/gstack"
+    },
+    {
+      "id": "codex-routing-note",
+      "type": "append_managed_block",
+      "description": "Add a managed note about GStack routing",
+      "target": "${home}/.codex/AGENTS.md",
+      "value": "Use gstack workflow skills when explicitly invoked by the user."
+    }
+  ],
+  "verify": [
+    {
+      "id": "omx-version",
+      "type": "command",
+      "description": "Check whether omx is available",
+      "command": "command -v omx >/dev/null 2>&1",
+      "timeout_ms": 30000
+    }
+  ]
+}

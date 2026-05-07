@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "serena",
+  "name": "Serena MCP",
+  "summary": "Semantic code intelligence MCP server for agent harnesses.",
+  "category": "mcp",
+  "stacks": ["base", "everything"],
+  "harnesses": ["codex", "opencode", "claude"],
+  "install": [
+    {
+      "id": "tool-dir",
+      "type": "mkdir",
+      "description": "Create the Serena tool directory",
+      "target": "${toolsDir}/serena"
+    },
+    {
+      "id": "codex-mcp-note",
+      "type": "toml.merge",
+      "description": "Record Serena MCP enablement for Codex users",
+      "target": "${home}/.codex/config.toml",
+      "value": {
+        "botstack_serena_enabled": true
+      }
+    }
+  ],
+  "verify": [
+    {
+      "id": "uvx",
+      "type": "command",
+      "description": "Check whether uvx is available for Serena",
+      "command": "command -v uvx >/dev/null 2>&1",
+      "timeout_ms": 30000
+    }
+  ]
+}

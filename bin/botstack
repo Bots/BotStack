@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+'use strict';
+
+const { runCli } = require('../src/cli');
+
+runCli(process.argv.slice(2), {
+  stdin: process.stdin,
+  stdout: process.stdout,
+  stderr: process.stderr,
+  env: process.env,
+}).then((code) => {
+  process.exitCode = code;
+}).catch((error) => {
+  process.stderr.write(`botstack: ${error.message}\n`);
+  process.exitCode = 1;
+});
