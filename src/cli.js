@@ -28,6 +28,7 @@ function parseArgs(argv) {
   }
 
   if (positional[0] === 'docs' && positional[1] === 'generate') args.command = 'docs-generate';
+  else if (positional[0] === 'tools') args.command = 'tools';
   else if (positional[0]) args.command = positional[0];
 
   return args;
@@ -37,9 +38,11 @@ function usage() {
   return [
     'Usage:',
     '  botstack install [--plan] [--yes] [--stack base|everything] [--tool id] [--harness id] [--home path]',
+    '  botstack tools',
     '  botstack docs generate [--out docs/generated]',
     '',
     'Examples:',
+    '  botstack tools',
     '  botstack install --plan --stack base --harness codex',
     '  botstack install --plan --tool gbrain --tool serena --harness codex',
   ].join('\n');
@@ -82,6 +85,11 @@ async function runCli(argv, io) {
   const rootDir = path.resolve(__dirname, '..');
   const plugins = loadPlugins(path.join(rootDir, 'src', 'plugins'));
 
+  if (args.command === 'tools') {
+    io.stdout.write(renderToolsList(plugins));
+    return 0;
+  }
+
   if (args.command === 'docs-generate') {
     const outputDir = path.resolve(args.docsOut || path.join(rootDir, 'docs', 'generated'));
     const files = writeReferenceDocs(plugins, outputDir);
@@ -111,4 +119,19 @@ async function runCli(argv, io) {
   return result.failed.length > 0 ? 1 : 0;
 }
 
-module.exports = { parseArgs, runCli };
+function renderToolsList(plugins) {
+  const harnesses = [...new Set(plugins.flatMap((plugin) => plugin.harnesses || []))].sort();
+  const lines = ['Botstack tools', ''];
+  for (const plugin of plugins) {
+    lines.push(`${plugin.id}`);
+    lines.push(`  name: ${plugin.name}`);
+    lines.push(`  summary: ${plugin.summary}`);
+    lines.push(`  stacks: ${(plugin.stacks || []).join(', ')}`);
+    lines.push(`  harnesses: ${(plugin.harnesses || []).join(', ')}`);
+    lines.push('');
+  }
+  lines.push(`Harnesses: ${harnesses.join(', ')}`);
+  return `${lines.join('\n')}\n`;
+}
+
+module.exports = { parseArgs, runCli, renderToolsList };

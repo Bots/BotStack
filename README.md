@@ -37,6 +37,12 @@ Inspect the base plan without writing files:
 node bin/botstack install --plan --stack base --harness codex
 ```
 
+List bundled tools and harness support:
+
+```sh
+node bin/botstack tools
+```
+
 Inspect the all-tools plan:
 
 ```sh

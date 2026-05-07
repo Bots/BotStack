@@ -7,6 +7,7 @@ function writeReferenceDocs(plugins, outputDir) {
   fs.mkdirSync(outputDir, { recursive: true });
   const files = [];
   files.push(writeFile(path.join(outputDir, 'tools.md'), renderTools(plugins)));
+  files.push(writeFile(path.join(outputDir, 'support-matrix.md'), renderSupportMatrix(plugins)));
   files.push(writeFile(path.join(outputDir, 'install-directories.md'), renderInstallDirs(plugins)));
   files.push(writeFile(path.join(outputDir, 'verification.md'), renderVerification(plugins)));
   return files;
@@ -56,6 +57,37 @@ function renderVerification(plugins) {
   return `${lines.join('\n')}\n`;
 }
 
+function renderSupportMatrix(plugins) {
+  const harnesses = collectHarnesses(plugins);
+  const lines = ['# Support Matrix', '', 'Generated from built-in Botstack manifests.', ''];
+  lines.push(`| Tool | ${harnesses.map(formatHarnessName).join(' | ')} |`);
+  lines.push(`| --- | ${harnesses.map(() => '---').join(' | ')} |`);
+  for (const plugin of plugins) {
+    lines.push(`| ${plugin.name} | ${harnesses.map((harness) => plugin.harnesses?.includes(harness) ? 'yes' : 'no').join(' | ')} |`);
+  }
+  lines.push('');
+  return `${lines.join('\n')}\n`;
+}
+
+function collectHarnesses(plugins) {
+  const seen = new Set();
+  for (const plugin of plugins) {
+    for (const harness of plugin.harnesses || []) seen.add(harness);
+  }
+  return [...seen].sort();
+}
+
+function formatHarnessName(harness) {
+  const names = {
+    aider: 'Aider',
+    claude: 'Claude Code',
+    codex: 'Codex CLI',
+    continue: 'Continue',
+    opencode: 'OpenCode',
+  };
+  return names[harness] || harness;
+}
+
 function formatDocPath(value) {
   if (!value) return value;
   return value
@@ -65,4 +97,4 @@ function formatDocPath(value) {
     .replaceAll('${stateDir}', '~/.botstack/state');
 }
 
-module.exports = { writeReferenceDocs };
+module.exports = { writeReferenceDocs, renderSupportMatrix };

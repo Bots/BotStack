@@ -45,4 +45,16 @@ test('docs generate writes manifest reference docs', async () => {
   assert.equal(code, 0);
   assert.match(fs.readFileSync(path.join(outDir, 'tools.md'), 'utf8'), /GStack/);
   assert.match(fs.readFileSync(path.join(outDir, 'verification.md'), 'utf8'), /GBrain/);
+  assert.match(fs.readFileSync(path.join(outDir, 'support-matrix.md'), 'utf8'), /Codex CLI/);
+});
+
+test('tools command lists tool and harness support', async () => {
+  const homeDir = fs.mkdtempSync(path.join(os.tmpdir(), 'botstack-home-'));
+  const capture = captureIo(homeDir);
+
+  const code = await runCli(['tools'], capture.io);
+
+  assert.equal(code, 0);
+  assert.match(capture.stdout, /gstack/);
+  assert.match(capture.stdout, /harnesses: codex, opencode, claude/);
 });
