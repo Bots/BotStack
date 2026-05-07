@@ -15,7 +15,8 @@ Config mutation operations create backups under:
 Current rollback status:
 
 - Backups are created before managed config writes when the target file exists.
-- The ledger records planned, applied, verified, and failed states.
+- The ledger records planned, applied, verified, failed, and skipped states.
+- If a tool step fails, BotStack skips that tool's remaining steps so it does not write harness config for a tool that did not install.
 - Automatic uninstall is not implemented yet.
 
 Before public release, rollback should become an explicit command:

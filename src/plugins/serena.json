@@ -18,7 +18,7 @@
       "id": "install-cli",
       "type": "command",
       "description": "Install the Serena CLI with uv",
-      "command": "uv tool install --from git+https://github.com/oraios/serena serena",
+      "command": "uv tool install -p 3.13 serena-agent@latest --prerelease=allow",
       "timeout_ms": 300000
     },
     {

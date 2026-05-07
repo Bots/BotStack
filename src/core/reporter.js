@@ -34,7 +34,9 @@ function renderFinalReport(result) {
   const lines = ['Botstack final report'];
   lines.push(`Verified: ${result.verified.length}`);
   lines.push(`Failed: ${result.failed.length}`);
+  lines.push(`Skipped: ${result.skipped.length}`);
   for (const failed of result.failed) lines.push(`  - ${failed.step.id}: ${failed.error.message}`);
+  for (const skipped of result.skipped) lines.push(`  - ${skipped.step.id}: ${skipped.reason}`);
   lines.push('');
   return `${lines.join('\n')}\n`;
 }
