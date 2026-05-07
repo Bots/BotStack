@@ -8,7 +8,7 @@ Generated from built-in Botstack manifests.
 
 ## Graphify
 
-- `echo 'graphify verification pending manifest source'` — Placeholder verification until Graphify install source is finalized
+- `command -v graphify >/dev/null 2>&1` — Check whether graphify is available
 
 ## GStack
 
@@ -16,5 +16,5 @@ Generated from built-in Botstack manifests.
 
 ## Serena MCP
 
-- `command -v uvx >/dev/null 2>&1` — Check whether uvx is available for Serena
+- `command -v serena >/dev/null 2>&1` — Check whether serena is available
 

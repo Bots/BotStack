@@ -14,6 +14,20 @@
       "target": "${toolsDir}/gbrain"
     },
     {
+      "id": "check-prereqs",
+      "type": "command",
+      "description": "Check GBrain prerequisites",
+      "command": "command -v curl >/dev/null 2>&1 && command -v git >/dev/null 2>&1 && command -v bun >/dev/null 2>&1 && command -v jq >/dev/null 2>&1",
+      "timeout_ms": 30000
+    },
+    {
+      "id": "install-cli",
+      "type": "command",
+      "description": "Install the GBrain CLI with GStack's pinned installer",
+      "command": "curl -fsSL https://raw.githubusercontent.com/garrytan/gstack/main/bin/gstack-gbrain-install -o \"${toolsDir}/gbrain/gstack-gbrain-install\" && bash \"${toolsDir}/gbrain/gstack-gbrain-install\" --install-dir \"${toolsDir}/gbrain/repo\"",
+      "timeout_ms": 300000
+    },
+    {
       "id": "codex-config",
       "type": "toml.merge",
       "description": "Register GBrain notes for Codex users",

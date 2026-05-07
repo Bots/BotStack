@@ -8,9 +8,9 @@ requiring network access when possible.
 Current built-in checks:
 
 - GStack: check whether `omx` is available.
-- Serena MCP: check whether `uvx` is available.
+- Serena MCP: check whether `serena` is available.
 - GBrain: check whether `gbrain` is available.
-- Graphify: placeholder verification until its install source is finalized.
+- Graphify: check whether `graphify` is available.
 
 Rules:
 

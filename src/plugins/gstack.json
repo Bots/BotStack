@@ -14,6 +14,37 @@
       "target": "${toolsDir}/gstack"
     },
     {
+      "id": "check-prereqs",
+      "type": "command",
+      "description": "Check GStack prerequisites",
+      "command": "command -v git >/dev/null 2>&1 && command -v bun >/dev/null 2>&1",
+      "timeout_ms": 30000
+    },
+    {
+      "id": "install-codex",
+      "type": "command",
+      "description": "Install GStack for Codex",
+      "harnesses": ["codex"],
+      "command": "if [ -d \"${toolsDir}/gstack/repo/.git\" ]; then git -C \"${toolsDir}/gstack/repo\" pull --ff-only; else git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git \"${toolsDir}/gstack/repo\"; fi && \"${toolsDir}/gstack/repo/setup\" --host codex",
+      "timeout_ms": 300000
+    },
+    {
+      "id": "install-opencode",
+      "type": "command",
+      "description": "Install GStack for OpenCode",
+      "harnesses": ["opencode"],
+      "command": "if [ -d \"${toolsDir}/gstack/repo/.git\" ]; then git -C \"${toolsDir}/gstack/repo\" pull --ff-only; else git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git \"${toolsDir}/gstack/repo\"; fi && \"${toolsDir}/gstack/repo/setup\" --host opencode",
+      "timeout_ms": 300000
+    },
+    {
+      "id": "install-claude",
+      "type": "command",
+      "description": "Install GStack for Claude Code",
+      "harnesses": ["claude"],
+      "command": "if [ -d \"${toolsDir}/gstack/repo/.git\" ]; then git -C \"${toolsDir}/gstack/repo\" pull --ff-only; else git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git \"${toolsDir}/gstack/repo\"; fi && \"${toolsDir}/gstack/repo/setup\" --host claude",
+      "timeout_ms": 300000
+    },
+    {
       "id": "codex-routing-note",
       "type": "append_managed_block",
       "description": "Add a managed note about GStack routing",

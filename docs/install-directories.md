@@ -18,6 +18,5 @@ Harness config paths used by v1 planning:
 - `~/.aider.conf.yml` — Aider config.
 - `~/.continue/config.json` — Continue config.
 
-Real upstream install sources are not finalized yet. Until then, built-in
-manifests use safe directory creation, managed config notes, and placeholder
-verification commands.
+Built-in manifests include install commands for the bundled tools. Botstack
+shows those commands in `--plan` output before running them.

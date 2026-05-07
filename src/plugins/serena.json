@@ -14,6 +14,20 @@
       "target": "${toolsDir}/serena"
     },
     {
+      "id": "check-prereqs",
+      "type": "command",
+      "description": "Check Serena prerequisites",
+      "command": "command -v uv >/dev/null 2>&1",
+      "timeout_ms": 30000
+    },
+    {
+      "id": "install-cli",
+      "type": "command",
+      "description": "Install the Serena CLI with uv",
+      "command": "uv tool install --from git+https://github.com/oraios/serena serena",
+      "timeout_ms": 300000
+    },
+    {
       "id": "codex-mcp-note",
       "type": "toml.merge",
       "description": "Record Serena MCP enablement for Codex users",
@@ -50,10 +64,10 @@
   ],
   "verify": [
     {
-      "id": "uvx",
+      "id": "version",
       "type": "command",
-      "description": "Check whether uvx is available for Serena",
-      "command": "command -v uvx >/dev/null 2>&1",
+      "description": "Check whether serena is available",
+      "command": "command -v serena >/dev/null 2>&1",
       "timeout_ms": 30000
     }
   ]
