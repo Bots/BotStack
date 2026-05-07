@@ -11,6 +11,7 @@ const plugins = [
     name: 'Base Tool',
     summary: 'Base',
     stacks: ['base', 'everything'],
+    harnesses: ['codex'],
     install: [{ id: 'dir', type: 'mkdir', target: '${toolsDir}/base-tool' }],
     verify: [{ id: 'check', type: 'command', command: 'true' }],
   },
@@ -19,6 +20,7 @@ const plugins = [
     name: 'Extra Tool',
     summary: 'Extra',
     stacks: ['everything'],
+    harnesses: ['codex'],
     install: [{ id: 'dir', type: 'mkdir', target: '${toolsDir}/extra-tool' }],
     verify: [],
   },
@@ -55,6 +57,7 @@ test('buildPlan includes only operations matching selected harnesses', () => {
       name: 'Multi',
       summary: 'Multi',
       stacks: ['base'],
+      harnesses: ['codex', 'opencode'],
       install: [
         { id: 'dir', type: 'mkdir', target: '${toolsDir}/multi' },
         { id: 'codex', type: 'toml.merge', harnesses: ['codex'], target: '${home}/.codex/config.toml', value: { enabled: true } },
@@ -68,4 +71,16 @@ test('buildPlan includes only operations matching selected harnesses', () => {
 
   assert.deepEqual(plan.steps.map((step) => step.id), ['multi:dir', 'multi:opencode']);
   assert.equal(plan.steps.some((step) => step.target.includes('.codex')), false);
+});
+
+test('buildPlan reports selected plugin harness mismatches', () => {
+  const environment = detectEnvironment({ platform: 'linux', homeDir: '/tmp/home' });
+  const plan = buildPlan({
+    plugins,
+    environment,
+    selection: { stack: 'base', tools: [], harnesses: ['opencode'] },
+  });
+
+  assert.deepEqual(plan.errors, ['Base Tool does not support harness: opencode']);
+  assert.deepEqual(plan.steps, []);
 });

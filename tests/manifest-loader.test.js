@@ -61,3 +61,17 @@ test('validateManifest rejects malformed operation harness filters', () => {
     verify: [],
   }), /harnesses must be an array of non-empty strings/);
 });
+
+test('validateManifest rejects malformed top-level harnesses', () => {
+  assert.throws(() => validateManifest({
+    schema_version: 1,
+    id: 'demo',
+    name: 'Demo',
+    summary: 'Demo tool',
+    category: 'demo',
+    stacks: ['base'],
+    harnesses: ['codex', ''],
+    install: [],
+    verify: [],
+  }), /harnesses must be an array of non-empty strings/);
+});

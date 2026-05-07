@@ -19,6 +19,14 @@ function buildPlan({ plugins, environment, selection }) {
 
   const steps = [];
   for (const plugin of selectedPlugins) {
+    let blocked = false;
+    for (const harness of harnesses) {
+      if (Array.isArray(plugin.harnesses) && !plugin.harnesses.includes(harness)) {
+        errors.push(`${plugin.name} does not support harness: ${harness}`);
+        blocked = true;
+      }
+    }
+    if (blocked) continue;
     for (const operation of plugin.install) {
       if (!appliesToHarness(operation, harnesses)) continue;
       steps.push(stepFor(plugin, operation, environment, harnesses));

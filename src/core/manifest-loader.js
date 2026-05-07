@@ -22,7 +22,9 @@ function validateManifest(manifest, source = '<memory>') {
   requireString('summary');
   if (!Array.isArray(manifest.install)) errors.push('install must be an array of operations');
   if (!Array.isArray(manifest.verify)) errors.push('verify must be an array of operations');
-  if (!Array.isArray(manifest.harnesses)) errors.push('harnesses must be an array');
+  if (!Array.isArray(manifest.harnesses) || manifest.harnesses.some((item) => typeof item !== 'string' || item.trim() === '')) {
+    errors.push('harnesses must be an array of non-empty strings');
+  }
 
   for (const [index, operation] of (manifest.install || []).entries()) validateOperation(operation, `install[${index}]`, errors);
   for (const [index, operation] of (manifest.verify || []).entries()) validateOperation(operation, `verify[${index}]`, errors);
