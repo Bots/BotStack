@@ -8,10 +8,10 @@
   "harnesses": ["codex", "opencode", "claude", "aider", "continue"],
   "install": [
     {
-      "id": "tool-dir",
+      "id": "cache-dir",
       "type": "mkdir",
-      "description": "Create the GBrain tool directory",
-      "target": "${toolsDir}/gbrain"
+      "description": "Create Botstack cache for the GBrain installer helper",
+      "target": "${cacheDir}/gbrain"
     },
     {
       "id": "check-prereqs",
@@ -24,7 +24,7 @@
       "id": "install-cli",
       "type": "command",
       "description": "Install the GBrain CLI with GStack's pinned installer",
-      "command": "curl -fsSL https://raw.githubusercontent.com/garrytan/gstack/main/bin/gstack-gbrain-install -o \"${toolsDir}/gbrain/gstack-gbrain-install\" && bash \"${toolsDir}/gbrain/gstack-gbrain-install\" --install-dir \"${toolsDir}/gbrain/repo\"",
+      "command": "curl -fsSL https://raw.githubusercontent.com/garrytan/gstack/main/bin/gstack-gbrain-install -o \"${cacheDir}/gbrain/gstack-gbrain-install\" && bash \"${cacheDir}/gbrain/gstack-gbrain-install\" --install-dir \"${gbrainInstallDir}\"",
       "timeout_ms": 300000
     },
     {

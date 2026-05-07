@@ -38,6 +38,9 @@ Templates supported in string fields:
 
 - `${home}`
 - `${botstackDir}`
+- `${cacheDir}`
 - `${toolsDir}`
 - `${stateDir}`
+- `${gstackInstallDir}`
+- `${gbrainInstallDir}`
 - `${harnesses}`

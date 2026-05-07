@@ -34,8 +34,10 @@ function renderTools(plugins) {
 function renderInstallDirs(plugins) {
   const lines = ['# Install Directories', '', 'Generated from built-in Botstack manifests.', ''];
   for (const plugin of plugins) {
+    const operations = plugin.install.filter((item) => item.target);
+    if (operations.length === 0) continue;
     lines.push(`## ${plugin.name}`, '');
-    for (const operation of plugin.install.filter((item) => item.target)) {
+    for (const operation of operations) {
       const harnesses = operation.harnesses?.length ? ` (${operation.harnesses.join(', ')})` : '';
       lines.push(`- \`${formatDocPath(operation.target)}\`${harnesses} — ${operation.description || operation.id}`);
     }
@@ -93,8 +95,11 @@ function formatDocPath(value) {
   return value
     .replaceAll('${home}', '~')
     .replaceAll('${botstackDir}', '~/.botstack')
+    .replaceAll('${cacheDir}', '~/.botstack/cache')
     .replaceAll('${toolsDir}', '~/.botstack/tools')
-    .replaceAll('${stateDir}', '~/.botstack/state');
+    .replaceAll('${stateDir}', '~/.botstack/state')
+    .replaceAll('${gstackInstallDir}', '~/gstack')
+    .replaceAll('${gbrainInstallDir}', '~/gbrain');
 }
 
 module.exports = { writeReferenceDocs, renderSupportMatrix };

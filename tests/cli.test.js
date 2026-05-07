@@ -58,3 +58,23 @@ test('tools command lists tool and harness support', async () => {
   assert.match(capture.stdout, /gstack/);
   assert.match(capture.stdout, /harnesses: codex, opencode, claude/);
 });
+
+test('install refuses deprecated --yes flag', async () => {
+  const homeDir = fs.mkdtempSync(path.join(os.tmpdir(), 'botstack-home-'));
+  const capture = captureIo(homeDir);
+
+  const code = await runCli(['install', '--yes', '--stack', 'base', '--harness', 'codex', '--home', homeDir], capture.io);
+
+  assert.equal(code, 2);
+  assert.match(capture.stderr, /deprecated --yes/);
+});
+
+test('install refuses execution without --install', async () => {
+  const homeDir = fs.mkdtempSync(path.join(os.tmpdir(), 'botstack-home-'));
+  const capture = captureIo(homeDir);
+
+  const code = await runCli(['install', '--stack', 'base', '--harness', 'codex', '--home', homeDir], capture.io);
+
+  assert.equal(code, 2);
+  assert.match(capture.stderr, /without --install/);
+});

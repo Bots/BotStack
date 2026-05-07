@@ -8,12 +8,6 @@
   "harnesses": ["codex", "opencode", "claude"],
   "install": [
     {
-      "id": "tool-dir",
-      "type": "mkdir",
-      "description": "Create the Serena tool directory",
-      "target": "${toolsDir}/serena"
-    },
-    {
       "id": "check-prereqs",
       "type": "command",
       "description": "Check Serena prerequisites",

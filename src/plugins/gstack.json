@@ -8,10 +8,10 @@
   "harnesses": ["codex", "opencode", "claude"],
   "install": [
     {
-      "id": "tool-dir",
+      "id": "install-dir",
       "type": "mkdir",
-      "description": "Create the GStack tool directory",
-      "target": "${toolsDir}/gstack"
+      "description": "Create the recommended GStack clone directory",
+      "target": "${gstackInstallDir}"
     },
     {
       "id": "check-prereqs",
@@ -25,7 +25,7 @@
       "type": "command",
       "description": "Install GStack for Codex",
       "harnesses": ["codex"],
-      "command": "if [ -d \"${toolsDir}/gstack/repo/.git\" ]; then git -C \"${toolsDir}/gstack/repo\" pull --ff-only; else git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git \"${toolsDir}/gstack/repo\"; fi && \"${toolsDir}/gstack/repo/setup\" --host codex",
+      "command": "if [ -d \"${gstackInstallDir}/.git\" ]; then git -C \"${gstackInstallDir}\" pull --ff-only; else rmdir \"${gstackInstallDir}\" 2>/dev/null || true; git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git \"${gstackInstallDir}\"; fi && \"${gstackInstallDir}/setup\" --host codex",
       "timeout_ms": 300000
     },
     {
@@ -33,7 +33,7 @@
       "type": "command",
       "description": "Install GStack for OpenCode",
       "harnesses": ["opencode"],
-      "command": "if [ -d \"${toolsDir}/gstack/repo/.git\" ]; then git -C \"${toolsDir}/gstack/repo\" pull --ff-only; else git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git \"${toolsDir}/gstack/repo\"; fi && \"${toolsDir}/gstack/repo/setup\" --host opencode",
+      "command": "if [ -d \"${gstackInstallDir}/.git\" ]; then git -C \"${gstackInstallDir}\" pull --ff-only; else rmdir \"${gstackInstallDir}\" 2>/dev/null || true; git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git \"${gstackInstallDir}\"; fi && \"${gstackInstallDir}/setup\" --host opencode",
       "timeout_ms": 300000
     },
     {
@@ -41,7 +41,7 @@
       "type": "command",
       "description": "Install GStack for Claude Code",
       "harnesses": ["claude"],
-      "command": "if [ -d \"${toolsDir}/gstack/repo/.git\" ]; then git -C \"${toolsDir}/gstack/repo\" pull --ff-only; else git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git \"${toolsDir}/gstack/repo\"; fi && \"${toolsDir}/gstack/repo/setup\" --host claude",
+      "command": "if [ -d \"${gstackInstallDir}/.git\" ]; then git -C \"${gstackInstallDir}\" pull --ff-only; else rmdir \"${gstackInstallDir}\" 2>/dev/null || true; git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git \"${gstackInstallDir}\"; fi && \"${gstackInstallDir}/setup\" --host claude",
       "timeout_ms": 300000
     },
     {

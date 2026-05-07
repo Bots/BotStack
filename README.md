@@ -10,7 +10,7 @@ Think of it like this:
 - You pick the AI coding app you use, such as Codex CLI or OpenCode.
 - Botstack shows what it wants to install and which files it may change.
 - You preview the plan first.
-- Nothing changes until you run the install command without `--plan`.
+- Nothing changes until you run the install command with `--install`.
 
 ## Current Status
 
@@ -104,16 +104,16 @@ Use this when you want to see every bundled tool, including optional ones.
 Only run this after the preview looks right:
 
 ```sh
-node bin/botstack install --yes --stack base --harness codex
+node bin/botstack install --install --stack base --harness codex
 ```
 
 For OpenCode:
 
 ```sh
-node bin/botstack install --yes --stack base --harness opencode
+node bin/botstack install --install --stack base --harness opencode
 ```
 
-The word `--yes` means “go ahead and make the changes shown in the plan.”
+The word `--install` means “go ahead and make the changes shown in the plan.”
 
 ## Which Harness Name Should I Use?
 
@@ -141,7 +141,11 @@ Botstack prints the files before it changes them.
 
 Common paths include:
 
-- `~/.botstack/` for Botstack state and tool folders.
+- `~/.botstack/` for Botstack state, cache, logs, and backups.
+- `~/gstack` for the GStack clone.
+- `~/gbrain` for the GBrain clone.
+- Your Python user package directory for Graphify.
+- Your `uv` tool directory for Serena MCP.
 - `~/.codex/config.toml` for Codex CLI settings.
 - `~/.codex/AGENTS.md` for Codex agent guidance.
 - `~/.config/opencode/opencode.json` for OpenCode settings.

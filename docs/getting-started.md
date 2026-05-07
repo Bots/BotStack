@@ -83,18 +83,18 @@ change files.
 
 ## 6. Install After Reviewing
 
-If the preview looks right, remove `--plan` and add `--yes`.
+If the preview looks right, replace `--plan` with `--install`.
 
 For Codex CLI:
 
 ```sh
-node bin/botstack install --yes --stack base --harness codex
+node bin/botstack install --install --stack base --harness codex
 ```
 
 For OpenCode:
 
 ```sh
-node bin/botstack install --yes --stack base --harness opencode
+node bin/botstack install --install --stack base --harness opencode
 ```
 
 Botstack will run the install commands shown in the preview.
@@ -108,6 +108,16 @@ For the base stack, that currently includes:
 For the everything stack, it also includes:
 
 - Graphify
+
+## Where Tools Go
+
+Botstack uses each tool's normal install location:
+
+- GStack clone: `~/gstack`
+- GBrain clone: `~/gbrain`
+- Serena MCP: your `uv` tool directory
+- Graphify: your Python user package directory
+- Botstack logs, backups, and helper cache: `~/.botstack`
 
 ## 7. If Something Fails
 
@@ -130,4 +140,5 @@ Backups of changed config files go here:
 - **Harness**: the AI coding app Botstack configures, such as Codex CLI or OpenCode.
 - **Stack**: a group of tools. `base` is the normal starter set. `everything` includes optional tools too.
 - **Plan**: a preview of what Botstack would do.
+- **Install**: the mode that actually runs the plan.
 - **Ledger**: a log file that records what Botstack tried, what worked, and what failed.

@@ -5,9 +5,11 @@ Botstack writes only to paths it shows in the install plan.
 Default paths:
 
 - `~/.botstack/` — Botstack-managed state and installed tool directories.
-- `~/.botstack/tools/<tool>` — default tool installation directories.
+- `~/.botstack/cache/` — downloaded helper scripts used during installation.
 - `~/.botstack/state/install-ledger.jsonl` — append-only install state ledger.
 - `~/.botstack/state/backups/<run-id>/` — backups created before config mutations.
+- `~/gstack` — recommended GStack clone location.
+- `~/gbrain` — recommended GBrain clone location.
 
 Harness config paths used by v1 planning:
 

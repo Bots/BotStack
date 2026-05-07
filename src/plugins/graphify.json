@@ -8,12 +8,6 @@
   "harnesses": ["codex", "opencode", "claude"],
   "install": [
     {
-      "id": "tool-dir",
-      "type": "mkdir",
-      "description": "Create the Graphify tool directory",
-      "target": "${toolsDir}/graphify"
-    },
-    {
       "id": "check-prereqs",
       "type": "command",
       "description": "Check Graphify prerequisites",

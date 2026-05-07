@@ -10,13 +10,14 @@ const { writeReferenceDocs } = require('./core/docs-generator');
 const { renderPlan, renderFinalReport } = require('./core/reporter');
 
 function parseArgs(argv) {
-  const args = { command: 'install', planOnly: false, yes: false, verbose: false, stack: null, tools: [], harnesses: [], homeDir: null, docsOut: null };
+  const args = { command: 'install', planOnly: false, install: false, verbose: false, stack: null, tools: [], harnesses: [], homeDir: null, docsOut: null };
   const positional = [];
 
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
     if (arg === '--plan') args.planOnly = true;
-    else if (arg === '--yes' || arg === '-y') args.yes = true;
+    else if (arg === '--install') args.install = true;
+    else if (arg === '--yes' || arg === '-y') args.deprecatedYes = true;
     else if (arg === '--verbose') args.verbose = true;
     else if (arg === '--stack') args.stack = argv[++index];
     else if (arg === '--tool') args.tools.push(argv[++index]);
@@ -37,7 +38,8 @@ function parseArgs(argv) {
 function usage() {
   return [
     'Usage:',
-    '  botstack install [--plan] [--yes] [--stack base|everything] [--tool id] [--harness id] [--home path]',
+    '  botstack install --plan [--stack base|everything] [--tool id] [--harness id] [--home path]',
+    '  botstack install --install [--stack base|everything] [--tool id] [--harness id] [--home path]',
     '  botstack tools',
     '  botstack docs generate [--out docs/generated]',
     '',
@@ -49,7 +51,7 @@ function usage() {
 }
 
 async function promptForSelection(args, plugins, io) {
-  if (args.stack || args.tools.length > 0 || args.yes || !io.stdin.isTTY) {
+  if (args.stack || args.tools.length > 0 || args.install || args.deprecatedYes || !io.stdin.isTTY) {
     return {
       stack: args.stack || (args.tools.length > 0 ? 'custom' : 'base'),
       tools: args.tools,
@@ -101,6 +103,10 @@ async function runCli(argv, io) {
     io.stderr.write(`Unknown command: ${args.command}\n\n${usage()}\n`);
     return 2;
   }
+  if (args.deprecatedYes) {
+    io.stderr.write('Refusing to execute with deprecated --yes. Use --install after reviewing --plan.\n');
+    return 2;
+  }
 
   const environment = detectEnvironment({ env: io.env, homeDir: args.homeDir });
   const selection = await promptForSelection(args, plugins, io);
@@ -109,8 +115,8 @@ async function runCli(argv, io) {
 
   if (args.planOnly) return plan.errors.length > 0 ? 2 : 0;
   if (plan.errors.length > 0) return 2;
-  if (!args.yes && !io.stdin.isTTY) {
-    io.stderr.write('Refusing to execute without --yes in non-interactive mode. Use --plan to inspect only.\n');
+  if (!args.install) {
+    io.stderr.write('Refusing to execute without --install. Use --plan to inspect first.\n');
     return 2;
   }
 

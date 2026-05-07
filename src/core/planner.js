@@ -73,8 +73,11 @@ function expandValue(value, environment, harnesses) {
     return value
       .replaceAll('${home}', environment.homeDir)
       .replaceAll('${botstackDir}', environment.botstackDir)
+      .replaceAll('${cacheDir}', environment.cacheDir)
       .replaceAll('${toolsDir}', environment.toolsDir)
       .replaceAll('${stateDir}', environment.stateDir)
+      .replaceAll('${gstackInstallDir}', environment.installs.gstack)
+      .replaceAll('${gbrainInstallDir}', environment.installs.gbrain)
       .replaceAll('${harnesses}', harnesses.join(','));
   }
   if (Array.isArray(value)) return value.map((item) => expandValue(item, environment, harnesses));

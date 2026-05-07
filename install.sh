@@ -37,4 +37,4 @@ echo "No tools were installed yet."
 echo
 echo "Next:"
 echo "  $BOTSTACK_DIR/bin/botstack install --plan --stack base --harness codex"
-echo "  $BOTSTACK_DIR/bin/botstack install --stack base --harness codex"
+echo "  $BOTSTACK_DIR/bin/botstack install --install --stack base --harness codex"
